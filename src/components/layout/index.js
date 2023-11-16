@@ -13,6 +13,7 @@ import ViewCard from "./ViewCard";
 import { AddForm, EditForm, TextInput, CheckInput, RadioInput, SelectInput } from "./CustomForm";
 import SubmitButton from "./SubmitButton";
 import CountUp from "./CountUp";
+import UploadFileComp from "./UploadFileComp";
 
 export {
   useTitle,
@@ -33,4 +34,5 @@ export {
   AddForm, EditForm, TextInput, CheckInput, RadioInput, SelectInput,
   SubmitButton,
   CountUp,
+  UploadFileComp,
 };

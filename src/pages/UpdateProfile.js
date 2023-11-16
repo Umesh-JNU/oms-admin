@@ -3,7 +3,7 @@ import { Store } from "../states/store";
 import { reducer } from "../states/reducers";
 import { getProfile, updateProfile } from "../states/actions";
 import { EditForm, TextInput } from "../components";
-import { uploadImage } from "../utils/uploadImage";
+import { uploadFile } from "../utils/uploadImage";
 import { Col, ProgressBar, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 
@@ -106,7 +106,7 @@ export default function EditUserModel(props) {
     }
     try {
       // if (e.target.files[0]) {
-      const location = await uploadImage(
+      const location = await uploadFile(
         e.target.files[0],
         // file,
         token,

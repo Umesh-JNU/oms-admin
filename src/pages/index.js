@@ -7,8 +7,12 @@ import AddUser from './user/AddUser';
 import ViewUser from './user/ViewUser';
 
 import Category from "./category/Category";
+import AddCategory from "./category/AddCategory";
+import ViewCategory from "./category/ViewCategory";
 
 import Product from "./product/Product";
+import AddProduct from "./product/AddProduct";
+import ViewProduct from "./product/ViewProduct";
 
 import Order from "./order/Order";
 
@@ -17,8 +21,8 @@ import FAQ from "./faq/FAQ";
 export {
   Dashboard, Profile, AdminLoginScreen,
   Users, AddUser, ViewUser,
-  Category,
-  Product,
+  Category, AddCategory, ViewCategory,
+  Product, AddProduct, ViewProduct,
   Order,
   FAQ
 };

@@ -7,8 +7,8 @@ import { Header, SideNavBar, NotFound } from "./components";
 import {
   AdminLoginScreen, Dashboard, Profile,
   Users, AddUser, ViewUser,
-  Category,
-  Product,
+  Category, AddCategory, ViewCategory,
+  Product, AddProduct, ViewProduct,
   Order,
   FAQ
 } from "./pages";
@@ -29,11 +29,11 @@ function App() {
     { path: "/admin/user/create", element: <AddUser /> },
     { path: "/admin/view/user/:id", element: <ViewUser /> },
     { path: "/admin/category", element: <Category /> },
-    // { path: "/admin/category/create", element: <AddCategory /> },
-    // { path: "/admin/view/category/:id", element: <ViewCategory /> },
+    { path: "/admin/category/create", element: <AddCategory /> },
+    { path: "/admin/view/category/:id", element: <ViewCategory /> },
     { path: "/admin/products", element: <Product /> },
-    // { path: "/admin/product/create", element: <AddProduct /> },
-    // { path: "/admin/view/product/:id", element: <ViewProduct /> },
+    { path: "/admin/product/create", element: <AddProduct /> },
+    { path: "/admin/view/product/:id", element: <ViewProduct /> },
     { path: "/admin/faqs", element: <FAQ /> },
     // { path: "/admin/faq/create", element: <AddFaq /> },
     { path: "/admin/orders", element: <Order /> },

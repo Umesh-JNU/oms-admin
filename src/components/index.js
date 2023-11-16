@@ -18,6 +18,7 @@ import {
   AddForm, EditForm, TextInput, CheckInput, RadioInput, SelectInput,
   SubmitButton,
   CountUp, 
+  UploadFileComp,
 } from "./layout";
 
 import ArrayView from "./listView/ArrayView";
@@ -45,4 +46,5 @@ export {
   AddForm, EditForm, TextInput, CheckInput, RadioInput, SelectInput,
   SubmitButton,
   CountUp,
+  UploadFileComp,
 };
