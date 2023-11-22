@@ -148,7 +148,7 @@ export default function Products() {
           arr={variant && variant.length > 0 && variant.map((v) => {
             return { ...v, canada: v.quantity.canada, us: v.quantity.us }
           })}
-          column={{ "Canada Quantity": "canada", "US Quantity": "us", "Amount": "amount", "Volume": "volume" }}
+          column={{ "Canada Quantity (in ml)": "canada", "US Quantity (in fl. Oz.)": "us", "Amount": "amount", "Volume": "volume" }}
           title="Variant List"
         />
       ) : (

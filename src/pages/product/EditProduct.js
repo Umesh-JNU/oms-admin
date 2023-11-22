@@ -47,6 +47,7 @@ export default function EditProductModel(props) {
       props: {
         label: "Description",
         name: "description",
+        maxLength: 250,
         required: true
       }
     },
@@ -187,10 +188,10 @@ export default function EditProductModel(props) {
       <Row style={{ borderTop: "1px solid #0000002d" }}>
         <h5 style={{ margin: "1rem 0", textAlign: "center" }}>Variant Details</h5>
         <Col md={6}>
-          <TextInput label="Quantity As Per Canada" name="canada" value={quantity.canada} onChange={qtyHandler} />
+          <TextInput label="Quantity As Per Canada (in ml)" type="number" min={1} name="canada" value={quantity.canada} onChange={qtyHandler} />
         </Col>
         <Col md={6}>
-          <TextInput label="Quantity As Per United States" name="us" value={quantity.us} onChange={qtyHandler} />
+          <TextInput label="Quantity As Per United States (in fl. Oz.)" type="number" min={1} name="us" value={quantity.us} onChange={qtyHandler} />
         </Col>
         <Col md={3}>
           <TextInput label="Price" type="number" min={0} value={amount} onChange={(e) => setAmount(e.target.value)} />

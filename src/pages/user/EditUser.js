@@ -26,6 +26,7 @@ export default function EditUserModel(props) {
 		mobile_no: "",
 		dist_email: "",
 		dist_name: "",
+		dist_mob_no: "",
 		active: true,
 		role: "user"
 	};
@@ -86,6 +87,14 @@ export default function EditUserModel(props) {
 				required: true
 			}
 		},
+		{
+      type: "text",
+      props: {
+        label: "Distributor's Mobile No.",
+        name: "dist_mob_no",
+        required: true
+      }
+    },
 		{
 			type: "select",
 			col: 12,

@@ -23,6 +23,7 @@ export default function AddUser() {
     mobile_no: "",
     dist_email: "",
     dist_name: "",
+    dist_mob_no: "",
     active: true,
     role: "user"
   };
@@ -75,6 +76,7 @@ export default function AddUser() {
     },
     {
       type: "email",
+      col: 4,
       props: {
         label: "Distributor's Email",
         name: "dist_email",
@@ -84,11 +86,21 @@ export default function AddUser() {
     },
     {
       type: "text",
+      col: 4,
       props: {
         label: "Distributor's Name",
         name: "dist_name",
         minLength: 4,
         maxLength: 30,
+        required: true
+      }
+    },
+    {
+      type: "text",
+      col: 4,
+      props: {
+        label: "Distributor's Mobile No.",
+        name: "dist_mob_no",
         required: true
       }
     },

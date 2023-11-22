@@ -73,8 +73,8 @@ const ViewProduct = () => {
         <thead>
           <tr>
             <th>S.No</th>
-            <th>Canada Quantity</th>
-            <th>US Quantity</th>
+            <th>Canada Quantity (in ml)</th>
+            <th>US Quantity (in fl. Oz.)</th>
             <th>Amount</th>
             <th>Volume</th>
           </tr>

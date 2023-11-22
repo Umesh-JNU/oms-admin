@@ -72,9 +72,9 @@ const ViewUser = () => {
       <Details
         title="Distributor's Info"
         loading={loading}
-        data={user && { ...user, dist: { dist_email: user.dist_email, dist_name: user.dist_name } }}
+        data={user && { ...user, dist: { dist_email: user.dist_email, dist_name: user.dist_name, dist_mob_no: user.dist_mob_no } }}
         detailKey="dist"
-        fields={{ "Distributor's Email": "dist_email", "Distributor's Name": "dist_name" }}
+        fields={{ "Distributor's Email": "dist_email", "Distributor's Name": "dist_name", "Distributor's Mobile No.": "dist_mob_no" }}
       />
 
       <EditUserModel
