@@ -58,7 +58,7 @@ export default function Orders() {
       await getAll(dispatch, token, curPage, resultPerPage, query, status)
     }
     fetchData();
-  }, [token, curPage, resultPerPage, query]);
+  }, [token, curPage, resultPerPage, query, status]);
 
   useEffect(() => {
     if (error) {
