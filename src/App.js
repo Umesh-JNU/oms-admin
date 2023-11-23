@@ -9,8 +9,8 @@ import {
   Users, AddUser, ViewUser,
   Category, AddCategory, ViewCategory,
   Product, AddProduct, ViewProduct,
-  Order,
-  FAQ
+  Order, ViewOrder,
+  FAQ, AddFAQ
 } from "./pages";
 
 function App() {
@@ -35,9 +35,9 @@ function App() {
     { path: "/admin/product/create", element: <AddProduct /> },
     { path: "/admin/view/product/:id", element: <ViewProduct /> },
     { path: "/admin/faqs", element: <FAQ /> },
-    // { path: "/admin/faq/create", element: <AddFaq /> },
+    { path: "/admin/faq/create", element: <AddFAQ /> },
     { path: "/admin/orders", element: <Order /> },
-    // { path: "/admin/view/order/:id", element: <ViewOrder /> },
+    { path: "/admin/view/order/:id", element: <ViewOrder /> },
   ];
 
   return (

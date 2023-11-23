@@ -15,14 +15,16 @@ import AddProduct from "./product/AddProduct";
 import ViewProduct from "./product/ViewProduct";
 
 import Order from "./order/Order";
+import ViewOrder from "./order/ViewOrder";
 
 import FAQ from "./faq/FAQ";
+import AddFAQ from "./faq/AddFAQ";
 
 export {
   Dashboard, Profile, AdminLoginScreen,
   Users, AddUser, ViewUser,
   Category, AddCategory, ViewCategory,
   Product, AddProduct, ViewProduct,
-  Order,
-  FAQ
+  Order, ViewOrder,
+  FAQ, AddFAQ
 };
