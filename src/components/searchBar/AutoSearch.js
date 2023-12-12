@@ -22,10 +22,10 @@ const AutocompleteSearch = ({ onSelect, searchType }) => {
         try {
           switch (searchType) {
             case "user":
-              var { data } = await axiosInstance(`/api/admin/users/?keyword=${searchTerm}&role=sale-person`, {
+              var { data } = await axiosInstance(`/api/admin/user/all/?keyword=${searchTerm}`, {
                 headers: { Authorization: token }
               });
-              console.log(data)
+              console.log("user", {data});
               setFilteredOptions(data.users);
               break;
 
@@ -66,7 +66,7 @@ const AutocompleteSearch = ({ onSelect, searchType }) => {
       if (selectedItem !== null && selectedItem >= 0 && selectedItem < filteredOptions.length) {
         handleSelectOption(filteredOptions[selectedItem]);
       } else {
-        toast.error("Select a sale person", toastOptions);
+        toast.error("Select a user", toastOptions);
       }
     }
   };

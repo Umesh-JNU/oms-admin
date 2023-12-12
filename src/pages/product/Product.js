@@ -31,9 +31,11 @@ export default function Products() {
 
   const curPageHandler = (p) => setCurPage(p);
   const [variant, setVariant] = useState([]);
+  const [categoryCountry, setCategoryCountry] = useState();
   const [modalShow, setModalShow] = useState(false);
-  const showModelHandler = (ls) => {
+  const showModelHandler = (ls, location) => {
     // // console.log("product_list", ls);
+    setCategoryCountry(location);
     setVariant([...ls]);
     setModalShow(true);
   };
@@ -120,12 +122,12 @@ export default function Products() {
                 <td>
                   <IoMdOpen
                     className="open-model"
-                    onClick={() => showModelHandler(product.subProducts)}
+                    onClick={() => showModelHandler(product.subProducts, product.category?.location)}
                   />
                 </td>
                 <td>
                   {product.category ? (
-                    product.category.name
+                    `${product.category.name} - ${product.category.location}`
                   ) : (
                     <b>Category not set</b>
                   )}
@@ -145,10 +147,12 @@ export default function Products() {
         <ArrayView
           show={modalShow}
           onHide={() => setModalShow(false)}
-          arr={variant && variant.length > 0 && variant.map((v) => {
-            return { ...v, canada: v.quantity.canada, us: v.quantity.us }
-          })}
-          column={{ "Canada Quantity (in ml)": "canada", "US Quantity (in fl. Oz.)": "us", "Amount": "amount", "Volume": "volume" }}
+          arr={variant}
+          column={{ [categoryCountry === 'CA' ? "Quantity (in ml)" : "Quantity (in fl. Oz.)"]: "quantity", "Stock": "stock" }}
+          // arr={variant && variant.length > 0 && variant.map((v) => {
+          //   return { ...v, canada: v.quantity.canada, us: v.quantity.us }
+          // })}
+          // column={{ "Canada Quantity (in ml)": "canada", "US Quantity (in fl. Oz.)": "us", "Amount": "amount", "Volume": "volume" }}
           title="Variant List"
         />
       ) : (

@@ -4,9 +4,11 @@ import { Store } from "../../states/store";
 import { ToastContainer, toast } from "react-toastify";
 import reducer from "./state/reducer";
 import { create } from "./state/action";
-import { useTitle, AddForm, TextInput, UploadFileComp } from "../../components";
+import { useTitle, AddForm, TextInput, UploadFileComp, RadioInput } from "../../components";
 import { getAll } from "../category/state/action";
 import { Button, Col, Row } from "react-bootstrap";
+import { FaCheck } from 'react-icons/fa';
+import { ImCross } from "react-icons/im";
 import { toastOptions } from "../../utils/error";
 
 export default function AddProduct() {
@@ -18,9 +20,11 @@ export default function AddProduct() {
     error: "",
   });
 
-  const [quantity, setQuantity] = useState({ canada: "", us: "" });
-  const [amount, setAmount] = useState("");
-  const [volume, setVolume] = useState(0);
+  // const [quantity, setQuantity] = useState({ canada: "", us: "" });
+  // const [amount, setAmount] = useState("");
+  // const [volume, setVolume] = useState(0);
+  const [quantity, setQuantity] = useState();
+  const [stock, setStock] = useState(true);
   const [variant, setVariant] = useState([]);
 
   const productData = {
@@ -105,27 +109,34 @@ export default function AddProduct() {
   };
 
 
-  const qtyHandler = (e) => {
-    setQuantity({ ...quantity, [e.target.name]: e.target.value });
-  }
+  // const qtyHandler = (e) => {
+  //   setQuantity({ ...quantity, [e.target.name]: e.target.value });
+  // }
 
-  const priceHandler = () => {
-    if (!quantity.us || !quantity.canada) {
-      toast.warning("Canada and US Qauntity is required.", toastOptions);
+  const variantHandler = () => {
+    // if (!quantity.us || !quantity.canada) {
+    //   toast.warning("Canada and US Qauntity is required.", toastOptions);
+    //   return;
+    // }
+    // if (!amount) {
+    //   toast.warning("Please set an amount for the quantity.", toastOptions);
+    //   return;
+    // }
+    // if (!volume) {
+    //   toast.warning("Please set a volume for the quantity.", toastOptions);
+    //   return;
+    // }
+    // variant.push({ quantity, amount, volume, stock: volume > 0 });
+    // setQuantity({ canada: "", us: "" });
+    // setAmount("");
+    // setVolume(0);
+    if (!quantity) {
+      toast.warning("Quantity is required.", toastOptions);
       return;
     }
-    if (!amount) {
-      toast.warning("Please set an amount for the quantity.", toastOptions);
-      return;
-    }
-    if (!volume) {
-      toast.warning("Please set a volume for the quantity.", toastOptions);
-      return;
-    }
-    variant.push({ quantity, amount, volume, stock: volume > 0 });
-    setQuantity({ canada: "", us: "" });
-    setAmount("");
-    setVolume(0);
+    variant.push({ quantity, stock });
+    setQuantity("");
+    setStock();
   };
 
   useTitle("Create Product");
@@ -140,9 +151,78 @@ export default function AddProduct() {
       successMessage="Product Created Successfully!"
       reducerProps={{ loading, error, success, dispatch }}
     >
-      <UploadFileComp label="Upload Image" accept="image/*" required={true} file={productImage} setFile={imageHandler} fileType="image" imageMargin={'mb-3'}/>
+      <UploadFileComp label="Upload Image" accept="image/*" required={true} file={productImage} setFile={imageHandler} fileType="image" imageMargin={'mb-3'} />
 
       <Row style={{ borderTop: "1px solid #0000002d" }}>
+        <h5 style={{ margin: "1rem 0", textAlign: "center" }}>Variant Details</h5>
+        <Col md={12}>
+          <TextInput label="Quantity" type="number" placeholder="Quantity / Volume of Variant" min={1} name="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+        </Col>
+        <Col md={6}>
+          <h6>Stock</h6>
+          <RadioInput label="In-Stock" name="stock" checked={stock} onChange={e => setStock(true)} />
+          <RadioInput label="Out-of-Stock" name="stock" checked={!stock} onChange={e => setStock(false)} />
+        </Col>
+        <Col>
+          <Button className="mt-4" onClick={variantHandler}>
+            Add Quantity
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        {variant && variant.length > 0 && (
+          <div className="table-responsive">
+            <table
+              id="example1"
+              className="table table-bordered table-striped col-6"
+            >
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Stock</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {variant.map(({ quantity, stock }, i) => (
+                  <tr key={i}>
+                    <td>{quantity}</td>
+                    <td>{stock ? <FaCheck className="green" /> : <ImCross className="red" />}</td>
+                    <td>
+                      <Button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const index = variant.findIndex(
+                            (q) =>
+                              q.quantity === quantity &&
+                              q.stock === stock
+                          );
+                          // console.log({ index });
+                          if (index > -1) {
+                            // only splice array when item is found
+
+                            setVariant([
+                              ...variant.slice(0, index),
+
+                              // part of the array after the given item
+                              ...variant.slice(index + 1),
+                            ]);
+                          }
+                        }}
+                        type="danger"
+                        className="btn btn-danger btn-block"
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Row>
+      {/* <Row style={{ borderTop: "1px solid #0000002d" }}>
         <h5 style={{ margin: "1rem 0", textAlign: "center" }}>Variant Details</h5>
         <Col md={6}>
           <TextInput label="Quantity As Per Canada (in ml)" type="number" min={1} name="canada" value={quantity.canada} onChange={qtyHandler} />
@@ -220,7 +300,7 @@ export default function AddProduct() {
             </table>
           </div>
         )}
-      </Row>
+      </Row> */}
       <ToastContainer />
     </AddForm>
   );

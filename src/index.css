@@ -1,6 +1,7 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'react-loading-skeleton/dist/skeleton.css';
-@import "react-toastify/dist/ReactToastify.css";
+@import 'react-toastify/dist/ReactToastify.css';
+@import 'react-chat-elements/dist/main.css';
 
 body {
   margin: 0;
@@ -44,12 +45,13 @@ td {
   border-width: 0 1px;
 }
 
-#custom-switch{
+#custom-switch {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
   background-color: rgba(226, 86, 43, 0.747);
   font-size: 0.8em;
 }
-#custom-switch:checked{
+
+#custom-switch:checked {
   background-color: rgba(0, 128, 0, 0.836);
 }
 
@@ -368,7 +370,7 @@ table.table {
 .autocomplete-list {
   position: absolute;
   width: 100%;
-
+  z-index: 1;
 }
 
 .autocomplete-item {
@@ -379,6 +381,72 @@ table.table {
 .autocomplete-item:hover,
 .autocomplete-item.selected {
   background-color: #afafaf;
+}
+
+.h-68 {
+  height: 68%;
+}
+
+.msg-box {
+  align-items: flex-end;
+  flex: 1;
+  overflow: auto;
+}
+
+.message-list {
+  position: relative;
+}
+
+.rce-mlist {
+  position: absolute;
+  left: 0;
+  right: 0;
+  box-shadow: inset 0 5px 5px -3px #a89a9a;
+}
+
+.rce-mbox-photo--download {
+  align-items: center;
+}
+
+/* set the width of the scrollbar */
+.msg-box::-webkit-scrollbar,
+.chat-list-box::-webkit-scrollbar,
+.rce-input-textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* set the background color of the track */
+.msg-box::-webkit-scrollbar-track,
+.chat-list-box::-webkit-scrollbar-track,
+.rce-input-textarea::-webkit-scrollbar-track {
+  background-color: #bbb;
+}
+
+.msg-box::-webkit-scrollbar-thumb,
+.chat-list-box::-webkit-scrollbar-thumb,
+.rce-input-textarea::-webkit-scrollbar-thumb {
+  /* set the color of the thumb */
+  background-color: #7a797a;
+  /* round the corners of the thumb */
+  border-radius: 4px;
+}
+
+.msg-box::-webkit-scrollbar-thumb:hover,
+.chat-list-box::-webkit-scrollbar-thumb:hover,
+.rce-input-textarea::-webkit-scrollbar-thumb:hover {
+  /* set the color of the thumb on hover */
+  background-color: #323432b4;
+}
+
+.rce-input-textarea {
+  height: 41px !important;
+  margin: 0 5px;
+  background-color: #f3f3f3;
+}
+
+.rce-input-buttons {
+  margin: 0;
+  margin-left: 5px;
 }
 
 .bg-color {

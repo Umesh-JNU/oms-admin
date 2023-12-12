@@ -3,8 +3,9 @@ import { Store } from "../../states/store";
 import { useParams } from "react-router-dom";
 import reducer from "./state/reducer";
 import { getDetails, update } from "./state/action";
-import { EditForm, TextInput, UploadFileComp } from "../../components";
-import { uploadImage } from "../../utils/uploadImage";
+import { EditForm, RadioInput, TextInput, UploadFileComp } from "../../components";
+import { FaCheck } from 'react-icons/fa';
+import { ImCross } from "react-icons/im";
 import { Button, Col, ProgressBar, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { getError, toastOptions } from "../../utils/error";
@@ -22,9 +23,11 @@ export default function EditProductModel(props) {
     error: "",
   });
 
-  const [quantity, setQuantity] = useState({ canada: "", us: "" });
-  const [amount, setAmount] = useState("");
-  const [volume, setVolume] = useState(0);
+  // const [quantity, setQuantity] = useState({ canada: "", us: "" });
+  // const [amount, setAmount] = useState("");
+  // const [volume, setVolume] = useState(0);
+  const [quantity, setQuantity] = useState();
+  const [stock, setStock] = useState(true);
   const [variant, setVariant] = useState([]);
 
   const productData = {
@@ -111,34 +114,37 @@ export default function EditProductModel(props) {
     }
   };
 
-  const qtyHandler = (e) => {
-    setQuantity({ ...quantity, [e.target.name]: e.target.value });
-  }
+  // const qtyHandler = (e) => {
+  //   setQuantity({ ...quantity, [e.target.name]: e.target.value });
+  // }
 
-  const priceHandler = async () => {
-    if (!quantity.us || !quantity.canada) {
-      toast.warning("Canada and US Qauntity is required.", toastOptions);
-      return;
-    }
-    if (!amount) {
-      toast.warning("Please set an amount for the quantity.", toastOptions);
-      return;
-    }
-    if (!volume) {
-      toast.warning("Please set a volume for the quantity.", toastOptions);
+  const variantHandler = async () => {
+    // if (!quantity.us || !quantity.canada) {
+    //   toast.warning("Canada and US Qauntity is required.", toastOptions);
+    //   return;
+    // }
+    // if (!amount) {
+    //   toast.warning("Please set an amount for the quantity.", toastOptions);
+    //   return;
+    // }
+    // if (!volume) {
+    //   toast.warning("Please set a volume for the quantity.", toastOptions);
+    //   return;
+    // }
+    if (!quantity) {
+      toast.warning("Quantity is required.", toastOptions);
       return;
     }
 
     try {
-      const { data } = await axiosInstance.post("/api/admin/sub-product/create", { pid: id, quantity, amount, volume, stock: volume > 0 },
+      const { data } = await axiosInstance.post("/api/admin/sub-product/create", { pid: id, quantity, stock },
         { headers: { Authorization: token } }
       );
 
       console.log({ data });
       variant.push(data.subProduct);
-      setQuantity({ canada: "", us: "" });
-      setAmount("");
-      setVolume(0);
+      setQuantity("");
+      setStock();
     } catch (error) {
       toast.error(getError(error), toastOptions);
     }
@@ -187,6 +193,58 @@ export default function EditProductModel(props) {
 
       <Row style={{ borderTop: "1px solid #0000002d" }}>
         <h5 style={{ margin: "1rem 0", textAlign: "center" }}>Variant Details</h5>
+        <Col md={12}>
+          <TextInput label="Quantity" type="number" placeholder="Quantity / Volume of Variant" min={1} name="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+        </Col>
+        <Col md={6}>
+          <h6>Stock</h6>
+          <RadioInput label="In-Stock" name="stock" checked={stock} onChange={e => setStock(true)} />
+          <RadioInput label="Out-of-Stock" name="stock" checked={!stock} onChange={e => setStock(false)} />
+        </Col>
+        <Col>
+          <Button className="mt-4" onClick={variantHandler}>
+            Add Quantity
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        {variant && variant.length > 0 && (
+          <div className="table-responsive">
+            <table
+              id="example1"
+              className="table table-bordered table-striped col-6"
+            >
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Stock</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {variant.map(({ quantity, stock, _id }, i) => (
+                  <tr key={i}>
+                    <td>{quantity}</td>
+                    <td>{stock ? <FaCheck className="green" /> : <ImCross className="red" />}</td>
+                    <td>
+                    <Button
+                        onClick={(e) => { deleteVariant(e, _id) }}
+                        type="danger"
+                        className="btn btn-danger btn-block"
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Row>
+
+      {/* <Row style={{ borderTop: "1px solid #0000002d" }}>
+        <h5 style={{ margin: "1rem 0", textAlign: "center" }}>Variant Details</h5>
         <Col md={6}>
           <TextInput label="Quantity As Per Canada (in ml)" type="number" min={1} name="canada" value={quantity.canada} onChange={qtyHandler} />
         </Col>
@@ -200,7 +258,7 @@ export default function EditProductModel(props) {
           <TextInput label="Stock" type="number" min={0} value={volume} onChange={(e) => setVolume(e.target.value)} />
         </Col>
         <Col>
-          <Button className="mt-4" onClick={priceHandler}>
+          <Button className="mt-4" onClick={variantHandler}>
             Add Quantity
           </Button>
         </Col>
@@ -243,7 +301,7 @@ export default function EditProductModel(props) {
             </table>
           </div>
         )}
-      </Row>
+      </Row> */}
     </EditForm>
   );
 }

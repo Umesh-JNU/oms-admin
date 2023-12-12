@@ -15,7 +15,6 @@ import {
   MotionDiv,
   ArrayView,
   CustomPagination,
-  DeleteButton,
   CustomSkeleton,
 } from "../../components";
 import reducer from "./state/reducer";
@@ -35,6 +34,7 @@ export default function Orders() {
   const [modalShow, setModalShow] = useState(false);
   const [productList, setProductList] = useState([]);
 
+  console.log({ productList });
   const curPageHandler = (p) => setCurPage(p);
   const showModelHandler = (ls) => {
     console.log("product_list", ls);
@@ -78,7 +78,8 @@ export default function Orders() {
       ) : (
         <Card>
           <Card.Header>
-            <div className="float-start d-flex align-items-center">
+            <Card.Title as={'h3'}>Orders</Card.Title>
+            {/* <div className="float-start d-flex align-items-center">
               <p className="p-bold m-0 me-3">Filter by Status</p>
               <Form.Group controlId="status">
                 <Form.Select
@@ -90,12 +91,13 @@ export default function Orders() {
                   aria-label="Default select example"
                 >
                   <option value="all">All</option>
-                  <option value="pending">Pending</option>
-                  <option value="paid">Paid</option>
+                  <option value="in-progress">In-Progress</option>
                   <option value="delivered">Delivered</option>
+                  <option value="paid">Paid</option>
+                  <option value="cancelled">Cancelled</option>
                 </Form.Select>
               </Form.Group>
-            </div>
+            </div> */}
             <div className="search-box float-end">
               <InputGroup>
                 <Form.Control
@@ -126,8 +128,8 @@ export default function Orders() {
                   <th>Order Id</th>
                   <th>User</th>
                   <th>Product</th>
-                  <th>Amount</th>
-                  <th>Status</th>
+                  {/* <th>Amount</th>
+                  <th>Status</th> */}
                   <th>Address</th>
                   <th>Actions</th>
                 </tr>
@@ -151,8 +153,8 @@ export default function Orders() {
                           onClick={() => showModelHandler(order.products)}
                         />
                       </td>
-                      <td>{order.amount}</td>
-                      <td>{order.status}</td>
+                      {/* <td>{order.amount}</td>
+                      <td>{order.status}</td> */}
                       <td>{order.address?.town}</td>
                       <td>
                         <Button
@@ -215,12 +217,12 @@ export default function Orders() {
           arr={productList && productList.length > 0 && productList.map(({ product, quantity, parent_prod }) => {
             return {
               name: parent_prod?.name,
-              type: product?.quantity.canada + ' ml',
-              amount: product?.amount,
+              // type: product?.quantity.canada + ' ml',
               qty: quantity,
             }
           })}
-          column={{ "Product Name": "name", "Variant Type": "type", "Variant Amount": "amount", "Quantity": "qty" }}
+          // column={{ "Product Name": "name", "Variant Type": "type", "Variant Amount": "amount", "Quantity": "qty" }}
+          column={{ "Product Name": "name", "Quantity": "qty" }}
           title="Product List"
         />
       ) : (

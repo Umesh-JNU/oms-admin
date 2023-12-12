@@ -97,7 +97,7 @@ export default function Users() {
         // isTitle="true"
         // title="Users"
         >
-          {users && users.length &&
+          {users && users.length > 0 &&
             users.map((user, i) => (
               <tr key={user._id} className="odd">
                 <td className="text-center">{skip + i + 1}</td>

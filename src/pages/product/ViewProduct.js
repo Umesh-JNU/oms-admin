@@ -9,6 +9,8 @@ import { getDetails } from "./state/action";
 import EditProductModel from "./EditProduct";
 import { Col, Row, Table } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
+import { FaCheck } from 'react-icons/fa';
+import { ImCross } from "react-icons/im";
 
 const keyProps = {
   "Name": "name", "Description": "description", "Category": "category", "Created At": "createdAt", "Last Update": "updatedAt"
@@ -61,7 +63,7 @@ const ViewProduct = () => {
   return (
     <ViewCard
       title={"Product Details"}
-      data={product && { ...product, category: product.category?.name }}
+      data={product && { ...product, category: `${product.category?.name} - ${product.category?.location === 'CA' ? 'Canada' : 'US'}` }}
       setModalShow={setModalShow}
       isImage="true"
       image_url={product?.product_img}
@@ -73,21 +75,17 @@ const ViewProduct = () => {
         <thead>
           <tr>
             <th>S.No</th>
-            <th>Canada Quantity (in ml)</th>
-            <th>US Quantity (in fl. Oz.)</th>
-            <th>Amount</th>
-            <th>Volume</th>
+            {product?.category ? product.category.location === 'CA' ? <th>Quantity (in ml)</th> : <th>Quantity (in fl. Oz.)</th> : <th>Qauntity</th>}
+            <th>Stock</th>
           </tr>
         </thead>
         <tbody>
           {product?.subProducts &&
-            product.subProducts.map(({ quantity, amount, volume }, i) => (
+            product.subProducts.map(({ quantity, stock }, i) => (
               <tr key={i} className="odd">
                 <td className="text-center">{i + 1}</td>
-                <td>{quantity.canada}</td>
-                <td>{quantity.us}</td>
-                <td>{amount}</td>
-                <td>{volume}</td>
+                <td>{quantity}</td>
+                <td>{stock ? <FaCheck className="green" /> : <ImCross className="red" />}</td>
               </tr>
             ))}
         </tbody>

@@ -1,5 +1,7 @@
 import React from "react";
 import { Modal, Button, Container, Table } from "react-bootstrap";
+import { FaCheck } from 'react-icons/fa';
+import { ImCross } from "react-icons/im";
 
 const getColumn = (obj) => {
   const attributes = Object.keys(obj);
@@ -64,19 +66,20 @@ export default function ArrayView(props) {
               </thead>
               <tbody>
                 {arr &&
-                  arr.map((row, i) => (
-                    <tr key={i} className="odd">
+                  arr.map((row, i) => {
+                    // {console.log({row})}
+                    return <tr key={row._id} className="odd">
                       <td className="text-center">{i + 1}</td>
                       {columns &&
                         columns.map(([_, col], i) => {
                           return (
                             <>
-                              <td key={col + i}>{row[col]}</td>
+                              <td key={col + i}>{typeof row[col] === 'boolean' ? (row[col] ? <FaCheck className="green" /> : <ImCross className="red" />) : row[col]}</td>
                             </>
                           );
                         })}
                     </tr>
-                  ))}
+                  })}
               </tbody>
             </Table>
           ) : (
@@ -89,6 +92,6 @@ export default function ArrayView(props) {
           Close
         </Button>
       </Modal.Footer>
-    </Modal>
+    </Modal >
   );
 }

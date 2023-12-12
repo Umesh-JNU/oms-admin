@@ -10,7 +10,8 @@ import {
   Category, AddCategory, ViewCategory,
   Product, AddProduct, ViewProduct,
   Order, ViewOrder,
-  FAQ, AddFAQ
+  FAQ, AddFAQ, 
+  Chat
 } from "./pages";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
     { path: "/admin/faq/create", element: <AddFAQ /> },
     { path: "/admin/orders", element: <Order /> },
     { path: "/admin/view/order/:id", element: <ViewOrder /> },
+    { path: "/admin/chats", element: <Chat /> },
   ];
 
   return (

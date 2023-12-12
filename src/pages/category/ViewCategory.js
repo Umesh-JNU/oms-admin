@@ -11,7 +11,7 @@ import { Col, Row, Table } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
 const keyProps = {
-  "Name": "name", "Description": "desc", "Created At": "createdAt", "Last Update": "updatedAt"
+  "Name": "name", "Description": "desc", "Country": "location", "Created At": "createdAt", "Last Update": "updatedAt"
 };
 
 const Details = ({ title, loading, data, detailKey, fields }) => {

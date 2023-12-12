@@ -6,6 +6,7 @@ import { HiUsers } from "react-icons/hi";
 import { RiDashboard2Fill } from "react-icons/ri";
 import { FaQuestion, FaShoppingBasket, FaSignOutAlt } from "react-icons/fa";
 import { MdCategory, MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { FaEnvelopesBulk } from "react-icons/fa6";
 
 const linkList = [
   { icon: <RiDashboard2Fill className="icon-md" />, text: "Dashboard", url: "/admin/dashboard" },
@@ -13,6 +14,7 @@ const linkList = [
   { icon: <MdOutlineProductionQuantityLimits className="icon-md" />, text: "Products", url: "/admin/products" },
   { icon: <FaShoppingBasket className="icon-md" />, text: "Orders", url: "/admin/orders" },
   { icon: <HiUsers className="icon-md" />, text: "Users", url: "/admin/users" },
+  { icon: <FaEnvelopesBulk className="icon-md" />, text: "Chats", url: "/admin/chats" },
   { icon: <FaQuestion className="icon-md" />, text: "FAQs", url: "/admin/faqs" },
 ];
 
@@ -22,6 +24,7 @@ const active_text = {
   "Products": "product",
   "Orders": "order",
   "Users": "user",
+  "Chats": "chat",
   "FAQs": "faq",
 };
 

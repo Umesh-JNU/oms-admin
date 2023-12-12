@@ -1,7 +1,7 @@
 
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Store } from "../../states/store";
-import { clearErrors } from "../../states/actions";
+import { clearErrors, clearSuccess } from "../../states/actions";
 import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -29,7 +29,7 @@ export default function Category() {
 
   const curPageHandler = (p) => setCurPage(p);
 
-  const [{ loading, error, categories, categoryCount }, dispatch] =
+  const [{ loading, error, categories, categoryCount, success }, dispatch] =
     useReducer(reducer, {
       loading: true,
       error: "",
@@ -51,7 +51,12 @@ export default function Category() {
       toast.error(error, toastOptions);
       clearErrors(dispatch);
     }
-  }, [error]);
+
+    if (success) {
+      toast.success("Category Deleted Successfully.", toastOptions);
+      clearSuccess(dispatch);
+    }
+  }, [error, success]);
 
   const numOfPages = Math.ceil(categoryCount / resultPerPage);
   const skip = resultPerPage * (curPage - 1);
@@ -62,6 +67,7 @@ export default function Category() {
     "Image",
     "Name",
     "Description",
+    "Country",
     "Actions",
   ];
 
@@ -107,6 +113,7 @@ export default function Category() {
                 </td>
                 <td>{category.name}</td>
                 <td>{category.desc}</td>
+                <td>{category.location === 'CA' ? 'Canada' : 'US'}</td>
                 <td>
                   <ViewButton
                     onClick={() => navigate(`/admin/view/category/${category._id}`)}

@@ -3,7 +3,7 @@ import { Store } from "../../states/store";
 import { useParams } from "react-router-dom";
 import reducer from "./state/reducer";
 import { getDetails, update } from "./state/action";
-import { EditForm, TextInput, UploadFileComp } from "../../components";
+import { EditForm, RadioInput, TextInput, UploadFileComp } from "../../components";
 import { uploadImage } from "../../utils/uploadImage";
 import { Col, ProgressBar, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -23,7 +23,8 @@ export default function EditCategoryModel(props) {
   const categoryData = {
     name: "",
     desc: "",
-    category_img: ""
+    category_img: "",
+    location: "US",
   };
   const categoryAttr = [
     {
@@ -57,7 +58,8 @@ export default function EditCategoryModel(props) {
       setInfo({
         name: category.name,
         desc: category.desc,
-        category_img: category.category_img
+        category_img: category.category_img,
+        location: category.location
       });
       setCategoryImage(category.category_img);
     }
@@ -97,7 +99,12 @@ export default function EditCategoryModel(props) {
       successMessage="Category Updated Successfully! Redirecting..."
       reducerProps={{ loadingUpdate, error, success, dispatch }}
     >
-      <UploadFileComp label="Upload Image" accept="image/*" required={true} file={categoryImage} setFile={handleImageChange} fileType="image" />
+      <h6>Select Location</h6>
+      <RadioInput label="US" name="location" checked={info.location === 'US'} onChange={e => setInfo({ ...info, location: 'US' })} />
+      <RadioInput label="Canada" name="location" checked={info.location === 'CA'} onChange={e => setInfo({ ...info, location: 'CA' })} />
+
+
+      <UploadFileComp label="Upload Image" accept="image/*" file={categoryImage} setFile={handleImageChange} fileType="image" />
     </EditForm>
   );
 }

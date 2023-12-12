@@ -132,7 +132,7 @@ export default function ViewCard(props) {
                           <p className="mb-0">
                             <strong>{k}</strong>
                           </p>
-                          <p>{loading ? <Skeleton /> : dynamicComp(data[attr])}</p>
+                          <p>{loading ? <Skeleton /> : dynamicComp(data[attr]) === 'CA' ? 'Canada' : dynamicComp(data[attr])}</p>
                         </Col>
                       )
                     })}

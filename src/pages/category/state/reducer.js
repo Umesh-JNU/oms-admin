@@ -35,7 +35,8 @@ export default function userReducer(state, action) {
         ...state,
         categories: updatedList,
         categoryCount: updatedListCount,
-        loading: false
+        loading: false,
+        success: true
       };
 
     case "FETCH_FAIL":
@@ -46,6 +47,9 @@ export default function userReducer(state, action) {
 
     case 'CLEAR_ERROR':
       return { ...state, error: null };
+
+    case 'CLEAR_SUCCESS':
+      return { ...state, success: null };
 
     default:
       return state;

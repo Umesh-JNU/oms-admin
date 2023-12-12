@@ -20,11 +20,14 @@ import ViewOrder from "./order/ViewOrder";
 import FAQ from "./faq/FAQ";
 import AddFAQ from "./faq/AddFAQ";
 
+import Chat from "./chat/Chat";
+
 export {
   Dashboard, Profile, AdminLoginScreen,
   Users, AddUser, ViewUser,
   Category, AddCategory, ViewCategory,
   Product, AddProduct, ViewProduct,
   Order, ViewOrder,
-  FAQ, AddFAQ
+  FAQ, AddFAQ,
+  Chat
 };

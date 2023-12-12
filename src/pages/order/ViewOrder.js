@@ -1,18 +1,17 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Store } from "../../states/store";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { Col, Form, Row, Table, Button, Spinner, } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import { CustomSkeleton, SelectInput, SubmitButton, useTitle, ViewButton, ViewCard } from "../../components";
+import { useTitle, ViewCard } from "../../components";
 import reducer from "./state/reducer";
-import { getDetails, updateStatus } from "./state/action";
+import { getDetails } from "./state/action";
 import Skeleton from "react-loading-skeleton";
-import { toastOptions } from "../../utils/error";
 import { clearSuccess } from "../../states/actions";
 
 const keyProps = {
-  "Order Id": "orderId", "User": "username", "Amount": "amount", "Created At": "createdAt", "Last Update": "updatedAt"
+  "Order Id": "orderId", "User": "username", "Created At": "createdAt", "Last Update": "updatedAt"
 };
 
 const Details = ({ title, loading, data, detailKey, fields }) => {
@@ -41,14 +40,12 @@ const Details = ({ title, loading, data, detailKey, fields }) => {
 };
 
 const ViewOrder = () => {
-  const navigate = useNavigate();
   const { state } = useContext(Store);
   const { token } = state;
   const { id } = useParams(); // order/:id
 
-  const [status, setStatus] = useState();
   const [modalShow, setModalShow] = useState(false);
-  const [{ loading, loadingUpdate, error, order, success }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, order, success }, dispatch] = useReducer(reducer, {
     loading: true,
     error: "",
   });
@@ -81,14 +78,14 @@ const ViewOrder = () => {
       isEdit={false}
       reducerProps={{ error, loading, dispatch }}
     >
-      <Row>
+      {/* <Row>
         <h3 className="mt-3">Order Status</h3>
         {loading ? <Skeleton height={30} /> :
           <>
             <Col md={4}>
               <SelectInput
                 placeholder="Select Order Status"
-                options={[{ "pending": "Pending" }, { "paid": "Paid" }, { "delivered": "Delivered" }]}
+                options={[{ "in-progress": "In-Progress" }, { "paid": "Paid" }, { "delivered": "Delivered" }, {"cancelled": "Cancelled"}]}
                 onChange={(e) => setStatus(e.target.value)}
                 value={status ? status : order?.status}
               />
@@ -98,7 +95,7 @@ const ViewOrder = () => {
             </Col>
           </>
         }
-      </Row>
+      </Row> */}
 
       <Details
         title="Address"
@@ -114,8 +111,7 @@ const ViewOrder = () => {
           <tr>
             <th>S.No</th>
             <th>Product Name</th>
-            <th>Variant Type</th>
-            <th>Variant Amount</th>
+            {/* <th>Variant Type</th> */}
             <th>Quantity</th>
           </tr>
         </thead>
@@ -125,8 +121,7 @@ const ViewOrder = () => {
               <tr key={product._id} className="odd">
                 <td className="text-center">{i + 1}</td>
                 <td>{parent_prod?.name}</td>
-                <td>{product?.quantity.canada + ' ml'}</td>
-                <td>{product?.amount}</td>
+                {/* <td>{product?.quantity.canada + ' ml'}</td> */}
                 <td>{quantity}</td>
               </tr>
             ))}
