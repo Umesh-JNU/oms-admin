@@ -148,7 +148,7 @@ export default function Products() {
           show={modalShow}
           onHide={() => setModalShow(false)}
           arr={variant}
-          column={{ [categoryCountry === 'CA' ? "Quantity (in ml)" : "Quantity (in fl. Oz.)"]: "quantity", "Stock": "stock" }}
+          column={{ [!categoryCountry ? "Quantity" : categoryCountry === 'CA' ? "Quantity (in ml)" : "Quantity (in fl. Oz.)"]: "quantity", "Stock": "stock" }}
           // arr={variant && variant.length > 0 && variant.map((v) => {
           //   return { ...v, canada: v.quantity.canada, us: v.quantity.us }
           // })}

@@ -103,18 +103,7 @@ export default function AddUser() {
         name: "dist_mob_no",
         required: true
       }
-    },
-    // {
-    //   type: "select",
-    //   col: 12,
-    //   props: {
-    //     label: "Role",
-    //     name: "role",
-    //     value: 'user',
-    //     placeholder: "Select Role",
-    //     options: [{ 'user': 'User' }, { 'admin': 'Admin' }]
-    //   }
-    // }
+    }
   ];
   const [info, setInfo] = useState(userData);
 

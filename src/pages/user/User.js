@@ -69,7 +69,6 @@ export default function Users() {
     "Email",
     "Mobile No.",
     "Account",
-    "Role",
     "Actions",
   ];
 
@@ -117,7 +116,6 @@ export default function Users() {
                     }
                   />
                 </td>
-                <td>{user.role}</td>
                 <td>
                   <ViewButton
                     onClick={() => navigate(`/admin/view/user/${user._id}`)}

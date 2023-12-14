@@ -3,10 +3,7 @@ import { Store } from "../../states/store";
 import { useParams } from "react-router-dom";
 import reducer from "./state/reducer";
 import { getDetails, update } from "./state/action";
-import { EditForm, TextInput } from "../../components";
-import { uploadImage } from "../../utils/uploadImage";
-import { Col, ProgressBar, Row } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { EditForm } from "../../components";
 
 export default function EditUserModel(props) {
 	const { state } = useContext(Store);
@@ -88,13 +85,13 @@ export default function EditUserModel(props) {
 			}
 		},
 		{
-      type: "text",
-      props: {
-        label: "Distributor's Mobile No.",
-        name: "dist_mob_no",
-        required: true
-      }
-    },
+			type: "text",
+			props: {
+				label: "Distributor's Mobile No.",
+				name: "dist_mob_no",
+				required: true
+			}
+		},
 		{
 			type: "select",
 			col: 12,
@@ -120,6 +117,7 @@ export default function EditUserModel(props) {
 				mobile_no: user.mobile_no,
 				dist_email: user.dist_email,
 				dist_name: user.dist_name,
+				dist_mob_no: user.dist_mob_no,
 				role: user.role,
 			});
 		}

@@ -36,7 +36,7 @@ const Chat = () => {
       position: author === userInfo?._id ? "right" : "left",
       type: 'text',
       text: body,
-      title: author === userInfo?._id ? `${userInfo.firstname} ${userInfo.lastname}` : `${user.firstname} ${user.lastname}`,
+      title: author === userInfo?._id ? `${userInfo.firstname} ${userInfo.lastname}` : `${user.title}`,
       date: new Date(timestamp)
     }
 

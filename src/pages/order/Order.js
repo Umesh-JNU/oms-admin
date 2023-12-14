@@ -214,15 +214,15 @@ export default function Orders() {
         <ArrayView
           show={modalShow}
           onHide={() => setModalShow(false)}
-          arr={productList && productList.length > 0 && productList.map(({ product, quantity, parent_prod }) => {
+          arr={productList && productList.length > 0 && productList.map(({ product, quantity, parent_prod, variant }) => {
             return {
               name: parent_prod?.name,
-              // type: product?.quantity.canada + ' ml',
+              type: variant,
               qty: quantity,
             }
           })}
           // column={{ "Product Name": "name", "Variant Type": "type", "Variant Amount": "amount", "Quantity": "qty" }}
-          column={{ "Product Name": "name", "Quantity": "qty" }}
+          column={{ "Product Name": "name", "Variant Type": "type", "Quantity": "qty" }}
           title="Product List"
         />
       ) : (

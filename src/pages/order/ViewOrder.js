@@ -11,7 +11,7 @@ import Skeleton from "react-loading-skeleton";
 import { clearSuccess } from "../../states/actions";
 
 const keyProps = {
-  "Order Id": "orderId", "User": "username", "Created At": "createdAt", "Last Update": "updatedAt"
+  "Order Id": "orderId", "User": "username", "Distributor's Name": "dist_name", "Distributor's Email": "dist_email", "Created At": "createdAt", "Last Update": "updatedAt"
 };
 
 const Details = ({ title, loading, data, detailKey, fields }) => {
@@ -70,7 +70,7 @@ const ViewOrder = () => {
   return (
     <ViewCard
       title={"Order Details"}
-      data={order && { ...order, username: `${order.userId.firstname} ${order.userId.lastname}` }}
+      data={order && { ...order, username: `${order.userId.firstname} ${order.userId.lastname}`, dist_name: order.userId.dist_name, dist_email: order.userId.dist_email }}
       setModalShow={setModalShow}
       keyProps={keyProps}
       // isImage={true}
@@ -111,17 +111,17 @@ const ViewOrder = () => {
           <tr>
             <th>S.No</th>
             <th>Product Name</th>
-            {/* <th>Variant Type</th> */}
+            <th>Variant Type</th>
             <th>Quantity</th>
           </tr>
         </thead>
         <tbody>
           {order?.products &&
-            order.products.map(({ product, quantity, parent_prod }, i) => (
+            order.products.map(({ product, quantity, parent_prod,variant }, i) => (
               <tr key={product._id} className="odd">
                 <td className="text-center">{i + 1}</td>
                 <td>{parent_prod?.name}</td>
-                {/* <td>{product?.quantity.canada + ' ml'}</td> */}
+                <td>{variant}</td>
                 <td>{quantity}</td>
               </tr>
             ))}
