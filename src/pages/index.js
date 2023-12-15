@@ -20,6 +20,9 @@ import ViewOrder from "./order/ViewOrder";
 import FAQ from "./faq/FAQ";
 import AddFAQ from "./faq/AddFAQ";
 
+import Banners from "./banner/Banners";
+import AddBanner from "./banner/AddBanner";
+
 import Chat from "./chat/Chat";
 
 export {
@@ -29,5 +32,6 @@ export {
   Product, AddProduct, ViewProduct,
   Order, ViewOrder,
   FAQ, AddFAQ,
+  Banners, AddBanner,
   Chat
 };

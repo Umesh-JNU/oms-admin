@@ -118,16 +118,16 @@ export default function AddUser() {
     resetForm();
   };
 
-  useTitle("Create User");
+  useTitle("Create Wholesaler");
   return (
     <AddForm
-      title="Add User"
+      title="Add Wholesaler"
       data={info}
       setData={setInfo}
       inputFieldProps={userAttr}
       submitHandler={submitHandler}
-      target="/admin/users"
-      successMessage="User Created Successfully!"
+      target="/admin/wholesalers"
+      successMessage="Wholesaler Created Successfully!"
       reducerProps={{ loading, error, success, dispatch }}
     >
       <ToastContainer />

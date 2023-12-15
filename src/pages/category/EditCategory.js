@@ -32,6 +32,8 @@ export default function EditCategoryModel(props) {
       props: {
         label: "Name",
         name: "name",
+        minLength: 4,
+        maxLength: 40,
         required: true
       }
     },
@@ -40,6 +42,7 @@ export default function EditCategoryModel(props) {
       props: {
         label: "Description",
         name: "desc",
+        maxLength: 250,
         required: true
       }
     }

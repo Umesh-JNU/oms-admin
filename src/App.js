@@ -11,6 +11,7 @@ import {
   Product, AddProduct, ViewProduct,
   Order, ViewOrder,
   FAQ, AddFAQ, 
+  Banners, AddBanner, 
   Chat
 } from "./pages";
 
@@ -26,9 +27,9 @@ function App() {
   const routeList = [
     { path: "/admin/view-profile", element: <Profile /> },
     { path: "/admin/dashboard", element: <Dashboard /> },
-    { path: "/admin/users", element: <Users /> },
-    { path: "/admin/user/create", element: <AddUser /> },
-    { path: "/admin/view/user/:id", element: <ViewUser /> },
+    { path: "/admin/wholesalers", element: <Users /> },
+    { path: "/admin/wholesaler/create", element: <AddUser /> },
+    { path: "/admin/view/wholesaler/:id", element: <ViewUser /> },
     { path: "/admin/category", element: <Category /> },
     { path: "/admin/category/create", element: <AddCategory /> },
     { path: "/admin/view/category/:id", element: <ViewCategory /> },
@@ -39,6 +40,8 @@ function App() {
     { path: "/admin/faq/create", element: <AddFAQ /> },
     { path: "/admin/orders", element: <Order /> },
     { path: "/admin/view/order/:id", element: <ViewOrder /> },
+    { path: "/admin/banners", element: <Banners /> },
+    { path: "/admin/banner/create", element: <AddBanner /> },
     { path: "/admin/chats", element: <Chat /> },
   ];
 

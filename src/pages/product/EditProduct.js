@@ -42,6 +42,8 @@ export default function EditProductModel(props) {
       props: {
         label: "Name",
         name: "name",
+        minLength: 4,
+        maxLength: 100,
         required: true
       }
     },
@@ -227,7 +229,7 @@ export default function EditProductModel(props) {
                     <td>{quantity}</td>
                     <td>{stock ? <FaCheck className="green" /> : <ImCross className="red" />}</td>
                     <td>
-                    <Button
+                      <Button
                         onClick={(e) => { deleteVariant(e, _id) }}
                         type="danger"
                         className="btn btn-danger btn-block"

@@ -62,7 +62,7 @@ function UploadFileComp({ file, setFile, fileType, imageMargin, ...props }) {
         />
       )}
 
-      {file && <img src={file} width={50} height={50} className={imageMargin}/>}
+      {file && <img src={file} width={50} height={50} className={imageMargin} />}
     </>
   )
 }

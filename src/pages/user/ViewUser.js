@@ -58,10 +58,10 @@ const ViewUser = () => {
     })();
   }, [token, id]);
 
-  useTitle("User Details");
+  useTitle("Wholesaler Details");
   return (
     <ViewCard
-      title={"User Details"}
+      title={"Wholesaler Details"}
       data={user}
       setModalShow={setModalShow}
       keyProps={keyProps}

@@ -29,6 +29,8 @@ export default function AddCategory() {
       props: {
         label: "Name",
         name: "name",
+        minLength: 4,
+        maxLength: 40,
         required: true
       }
     },
@@ -37,6 +39,7 @@ export default function AddCategory() {
       props: {
         label: "Description",
         name: "desc",
+        maxLength: 250,
         required: true
       }
     }

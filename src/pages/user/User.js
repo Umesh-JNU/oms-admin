@@ -90,8 +90,8 @@ export default function Users() {
           searchProps={{ searchInput, setSearchInput, setQuery }}
           isCreateBtn="true"
           createBtnProps={{
-            createURL: "/admin/user/create",
-            text: "User"
+            createURL: "/admin/wholesaler/create",
+            text: "Wholesaler"
           }}
         // isTitle="true"
         // title="Users"
@@ -118,7 +118,7 @@ export default function Users() {
                 </td>
                 <td>
                   <ViewButton
-                    onClick={() => navigate(`/admin/view/user/${user._id}`)}
+                    onClick={() => navigate(`/admin/view/wholesaler/${user._id}`)}
                   />
                   <DeleteButton onClick={() => deleteUser(user._id)} />
                 </td>

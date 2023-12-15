@@ -140,13 +140,13 @@ export default function EditUserModel(props) {
 	return (
 		<EditForm
 			{...props}
-			title="Edit User"
+			title="Edit Wholesaler"
 			data={info}
 			setData={setInfo}
 			inputFieldProps={userAttr}
 			submitHandler={submitHandler}
-			target="/admin/users"
-			successMessage="User Updated Successfully! Redirecting..."
+			target="/admin/wholesalers"
+			successMessage="Wholesaler Updated Successfully! Redirecting..."
 			reducerProps={{ loadingUpdate, error, success, dispatch }}
 		/>
 	);

@@ -4,18 +4,19 @@ import { Store } from "../../states/store";
 import { Link, useNavigate } from "react-router-dom";
 import { HiUsers } from "react-icons/hi";
 import { RiDashboard2Fill } from "react-icons/ri";
-import { FaQuestion, FaShoppingBasket, FaSignOutAlt } from "react-icons/fa";
+import { FaQuestion, FaShoppingBasket, FaSignOutAlt, FaImage } from "react-icons/fa";
 import { MdCategory, MdOutlineProductionQuantityLimits } from "react-icons/md";
-import { FaEnvelopesBulk } from "react-icons/fa6";
+import { BiMessageDetail } from "react-icons/bi";
 
 const linkList = [
   { icon: <RiDashboard2Fill className="icon-md" />, text: "Dashboard", url: "/admin/dashboard" },
   { icon: <MdCategory className="icon-md" />, text: "Category", url: "/admin/category" },
   { icon: <MdOutlineProductionQuantityLimits className="icon-md" />, text: "Products", url: "/admin/products" },
   { icon: <FaShoppingBasket className="icon-md" />, text: "Orders", url: "/admin/orders" },
-  { icon: <HiUsers className="icon-md" />, text: "Users", url: "/admin/users" },
-  { icon: <FaEnvelopesBulk className="icon-md" />, text: "Chats", url: "/admin/chats" },
+  { icon: <HiUsers className="icon-md" />, text: "Wholesalers", url: "/admin/wholesalers" },
+  { icon: <BiMessageDetail className="icon-md" />, text: "Chats", url: "/admin/chats" },
   { icon: <FaQuestion className="icon-md" />, text: "FAQs", url: "/admin/faqs" },
+  { icon: <FaImage className="icon-md" />, text: "Banners", url: "/admin/banners" },
 ];
 
 const active_text = {
@@ -23,9 +24,10 @@ const active_text = {
   "Category": "category",
   "Products": "product",
   "Orders": "order",
-  "Users": "user",
+  "Wholesalers": "wholesaler",
   "Chats": "chat",
   "FAQs": "faq",
+  "Banners": "banner",
 };
 
 export default function SideNavbar({ isExpanded }) {
@@ -45,9 +47,6 @@ export default function SideNavbar({ isExpanded }) {
   const activeLinkHandler = (text) => {
     // console.log("text", active_text[text]);
     // console.log(pathname.includes(active_text[text]));
-    if (text === 'Active Sales Tasks') {
-      return pathname.includes("warranty") || pathname.includes("dashboard");
-    }
     return pathname.includes(active_text[text]);
   };
 
