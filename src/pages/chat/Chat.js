@@ -19,18 +19,19 @@ const Chat = () => {
   const { state } = useContext(Store);
   const { token, userInfo } = state;
 
+  const [user, setUser] = useState();
+  const [chats, setChats] = useState();
   const [client, setClient] = useState();
   const [convSID, setConvSID] = useState();
-  const [conversation, setConversation] = useState();
-  console.log({ client, convSID });
-
-  const [loadingMsg, setLoadingMsg] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [user, setUser] = useState();
+  const [loading, setLoading] = useState(false);
+  const [conversation, setConversation] = useState();
+  const [loadingMsg, setLoadingMsg] = useState(false);
+  console.log({ chats, client, convSID });
 
   const getFormattedMsg = async (message) => {
-    const { body, attributes, author, media, type, timestamp } = message.state;
-    // console.log({ body, attributes, author, media, type, timestamp })
+    const { body, author, media, type, timestamp } = message.state;
+    // console.log({ body, author, media, type, timestamp })
 
     const obj = {
       position: author === userInfo?._id ? "right" : "left",
@@ -77,26 +78,38 @@ const Chat = () => {
     }
   };
 
-  const getAllParticipants = async (allConv) => {
+  const getAllParticipants = async (allConv, online) => {
     const participants = [];
     for (let conv of allConv.items) {
       const convPart = await conv.getParticipants();
+      let userPart, adminPart;
       for (let p of convPart) {
+        // await p.update({ lastReadMessageIndex: 0 });
         console.log({ p, userInfo });
         if (p.identity !== userInfo._id) {
-          const obj = {
-            sid: p.conversation?.sid,
-            avatar: p.attributes?.profile_img,
-            alt: 'img',
-            title: p.attributes?.name,
-          };
-
-          const ttl = await conv.getMessagesCount();
-          const unread = ttl - (p.lastReadMessageIndex ? p.lastReadMessageIndex : 0);
-          participants.push(unread > 0 ? { ...obj, unread } : obj);
+          userPart = p;
+        } else {
+          adminPart = p;
         }
       }
+
+      const obj = {
+        sid: userPart.conversation?.sid,
+        pid: userPart.sid,
+        avatar: userPart.attributes?.profile_img,
+        alt: 'img',
+        title: userPart.attributes?.name,
+      };
+
+      const LIU = userPart.state.lastReadMessageIndex;
+      const LIA = adminPart.state.lastReadMessageIndex;
+      const ttl = await conv.getMessagesCount();
+
+      const unread = online ? (ttl - LIA) : (LIU - LIA);
+      console.log({ unread, LIU, LIA, a: LIU - LIA, t: ttl - LIA })
+      participants.push(unread > 0 ? { ...obj, unread } : obj);
     }
+
     return participants;
   };
 
@@ -121,12 +134,6 @@ const Chat = () => {
     }
   }, [client, convSID]);
 
-  const [loading, setLoading] = useState(false);
-  const [chats, setChats] = useState();
-  const [chatID, setChatId] = useState();
-
-  console.log({ chats })
-
   useEffect(() => {
     const handleNewMessage = async (message) => {
       const formattedMsg = await formatMessage(message, OBJ);
@@ -135,23 +142,6 @@ const Chat = () => {
     };
 
     if (conversation) {
-      conversation.getMessages().then(async (messages) => {
-        const message = messages.items[5];
-
-        // advance the conversation's last read message index to the current read horizon - won't allow you to move the marker backwards
-        const a = await conversation.advanceLastReadMessageIndex(message.index);
-
-        // set last read message index of the conversation to a specific message
-        const b = await conversation.updateLastReadMessageIndex(message.index);
-
-        // Mark all messages read
-        // const c = await conversation.setAllMessagesRead();
-
-        // Mark all messages unread
-        // const d = await conversation.setAllMessagesUnread();
-        console.log({ a, b, })
-      }).catch(err => console.log("EEERRRRRRRRRRRRRRRRRR", { err }));
-
       console.log("Attaching messageAdded event handler");
       conversation.on('messageAdded', handleNewMessage);
     }
@@ -184,9 +174,26 @@ const Chat = () => {
           twiClient.on('initFailed', (error) => {
             toast.error(error.message, toastOptions);
           })
+          twiClient.on("tokenAboutToExpire", async (time) => {
+            try {
+              const res = await axiosInstance.get(
+                `/api/admin/chat/access-token`,
+                { headers: { Authorization: token } }
+              );
 
+              twiClient = await twiClient.updateToken(res.data.access_token)
+            } catch (error) {
+              toast.error(error.message, toastOptions);
+            }
+          });
           const allConv = await twiClient.getSubscribedConversations();
           const participants = await getAllParticipants(allConv);
+
+          twiClient.on('messageAdded', async () => {
+            const allParts = await getAllParticipants(allConv, true);
+            console.log("ON ADDED", { allParts });
+            setChats(allParts)
+          });
           console.log("PARTICIPANT", participants);
           setChats(participants);
           setLoading(false);
@@ -198,24 +205,6 @@ const Chat = () => {
     };
     fetchChats();
   }, []);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const { data } = await axiosInstance.get(
-          `/api/admin/chats/all`,
-          { headers: { Authorization: token } }
-        );
-
-        setChats(data.chats);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        toast.error(error.response.data.error.message, toastOptions);
-      }
-    })();
-  }, [token]);
 
   const userHandler = async (user) => {
     if (!user) {
@@ -233,36 +222,32 @@ const Chat = () => {
 
       setChats(prev => [data.chat, ...prev]);
       setUser(data.chat.user);
-      setChatId(data.chat._id);
+      // setChatId(data.chat._id);
     } catch (error) {
       toast.error(error.response.data.error.message, toastOptions);
     }
   };
 
   const sendMessage = async (inputValue) => {
-    // console.log({ t: typeof inputValue, inputValue })
+    if (!inputValue) { return; }
 
-    if (!inputValue) {
-      return;
-    }
     try {
       if (typeof inputValue === 'object') {
-        const sentMediaMsg = await conversation.prepareMessage().addMedia(inputValue).setAttributes({ authorName: `${userInfo.firstname} ${userInfo.lastname}`, content_type: inputValue.contentType }).build().send();
-        // console.log({ sentMediaMsg })
+        await conversation.prepareMessage().addMedia(inputValue).build().send();
       } else {
-        await conversation.sendMessage(inputValue, {
-          authorName: `${userInfo.firstname} ${userInfo.lastname}`
-        })
-
-        const unread = await conversation.getUnreadMessagesCount();
-        const msg = await conversation.getMessages();
-        // console.log({ msg, unread });
+        await conversation.sendMessage(inputValue);
       }
+      await axiosInstance.put("/api/admin/chat/read-horizon", {
+        convSID, user: user.pid
+      }, {
+        headers: { Authorization: token }
+      })
 
     } catch (err) {
       toast.error(err.response.data.error.message, toastOptions);
     }
   };
+
   return (
     <motion.div
       initial={{ x: "-100%" }}

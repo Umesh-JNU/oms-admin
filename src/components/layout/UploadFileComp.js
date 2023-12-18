@@ -7,10 +7,10 @@ import { toast } from "react-toastify";
 import { toastOptions } from "../../utils/error";
 {/**
   accept for pdf = ".pdf"
-  accept for image = 
+  accept for image = "image/*"
 */}
 
-function UploadFileComp({ file, setFile, fileType, imageMargin, ...props }) {
+function UploadFileComp({ file, setFile, fileType, imageMargin, isDimension, ...props }) {
   const { state } = useContext(Store);
   const { token } = state;
 
@@ -18,19 +18,10 @@ function UploadFileComp({ file, setFile, fileType, imageMargin, ...props }) {
   const [isUploaded, setIsUploaded] = useState(false);
   const uploadPercentageHandler = (per) => { setUploadPercentage(per); };
 
-  const uploadFileHandler = async (e, type) => {
-    if (!e.target.files[0]) {
-      setFile("");
-      return;
-    }
-    if (e.target.files[0].size > 5000000) {
-      toast.warning("File size is too large. (max size 5MB)", toastOptions);
-      setFile("");
-      return;
-    }
+  const uploadImageS3 = async (doc) => {
     try {
       const location = await uploadFile(
-        e.target.files[0],
+        doc,
         fileType,
         token,
         uploadPercentageHandler
@@ -47,6 +38,49 @@ function UploadFileComp({ file, setFile, fileType, imageMargin, ...props }) {
       }, 1000);
     } catch (error) {
       toast.error(error, toastOptions);
+    }
+  };
+
+  const getDimAndUpload = async (image) => {
+    // read file using fileReader
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      console.log("READER ONLOAD", e);
+      // creating image element to get the dimension
+      const img = new Image();
+      img.src = e.target.result;
+
+      img.onload = async () => {
+        if (img.width !== 1512 || img.height !== 504) {
+          toast.warning("Image size should be 1512 x 504", toastOptions);
+          return;
+        } else {
+          await uploadImageS3(image);
+        }
+      }
+    }
+
+    reader.readAsDataURL(image);
+  };
+  
+  const uploadFileHandler = async (e, type) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) {
+      setFile("");
+      return;
+    }
+
+    if (selectedFile.size > 5000000) {
+      toast.warning("File size is too large. (max size 5MB)", toastOptions);
+      setFile("");
+      return;
+    }
+
+    if (isDimension) {
+      await getDimAndUpload(selectedFile);
+    }
+    else {
+      await uploadImageS3(selectedFile);
     }
   };
 

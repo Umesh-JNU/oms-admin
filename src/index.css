@@ -404,8 +404,17 @@ table.table {
   box-shadow: inset 0 5px 5px -3px #a89a9a;
 }
 
+.rce-mbox-photo--img img {
+  max-width: 250px;
+}
+
 .rce-mbox-photo--download {
   align-items: center;
+}
+
+.msg-box-top .rce-citem .rce-citem-body .rce-citem-body--top-time,
+.msg-box-top .rce-citem .rce-citem-body .rce-citem-body--bottom {
+  display: none;
 }
 
 /* set the width of the scrollbar */

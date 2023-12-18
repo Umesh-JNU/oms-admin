@@ -1,7 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Store } from "../../states/store";
-
-import { Client } from '@twilio/conversations';
+import React, { useEffect, useRef, useState } from 'react'
 
 import { toast } from "react-toastify";
 import { toastOptions } from "../../utils/error";
@@ -30,10 +27,10 @@ const readFileAsBlob = (file) => {
 
 export default function Message({ reciever, loading, messageList, sendMessageToConv }) {
   console.log({ reciever })
-  const [inputValue, setInputValue] = useState();
-  const messageBoxRef = useRef(null);
   const inputRef = useRef(null);
   const inputFileRef = useRef(null);
+  const messageBoxRef = useRef(null);
+  const [inputValue, setInputValue] = useState();
 
   useEffect(() => {
     if (messageBoxRef.current && !loading) {
@@ -76,7 +73,6 @@ export default function Message({ reciever, loading, messageList, sendMessageToC
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault(); // Prevent the default behavior of the Enter key
-      // Your logic to send the message
       sendMessage();
     }
   };
@@ -92,7 +88,7 @@ export default function Message({ reciever, loading, messageList, sendMessageToC
   return (reciever ?
     <>
       <div style={{ borderBottom: '1px solid #000' }}>
-        <ChatItem {...reciever} />
+        <ChatItem {...reciever} className='msg-box-top' />
       </div>
 
       <div className='msg-box' ref={messageBoxRef}>
