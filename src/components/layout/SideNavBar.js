@@ -64,10 +64,10 @@ export default function SideNavbar({ isExpanded }) {
           }
         >
           <div className="brand-link">
-            <img src="/logo/logo.jpg" alt="" width={"50px"} height="auto" />
-            <span className="brand-text ms-2 font-weight-light">
+            <img src="/logo/logo.png" alt="" width={isExpanded ? "80%" : "100%"} height="auto" />
+            {/* <span className="brand-text ms-2 font-weight-light">
               OMS
-            </span>
+            </span> */}
           </div>
 
           <div className="sidebar">
