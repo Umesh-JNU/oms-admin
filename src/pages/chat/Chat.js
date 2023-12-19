@@ -78,7 +78,7 @@ const Chat = () => {
     }
   };
 
-  const getAllParticipants = async (allConv, online) => {
+  const getAllParticipants = async (allConv) => {
     const participants = [];
     for (let conv of allConv.items) {
       const convPart = await conv.getParticipants();
@@ -105,8 +105,12 @@ const Chat = () => {
       const LIA = adminPart.state.lastReadMessageIndex;
       const ttl = await conv.getMessagesCount();
 
-      const unread = online ? (ttl - LIA) : (LIU - LIA);
-      console.log({ unread, LIU, LIA, a: LIU - LIA, t: ttl - LIA })
+      if(!LIA) {
+        var unread = ttl;
+      }else {
+        var unread = ttl - LIA - 1;
+      }
+      console.log({ unread, LIU, LIA, a: LIU - LIA, t: ttl - LIA, ttl })
       participants.push(unread > 0 ? { ...obj, unread } : obj);
     }
 
@@ -132,6 +136,36 @@ const Chat = () => {
         console.log({ conv, convMessage, formattedMsgList });
       })();
     }
+
+    const handleNewConv = async () => {
+      try {
+        setLoading(true);
+        const allConv = await client.getSubscribedConversations();
+        const participants = await getAllParticipants(allConv);
+        setChats(participants);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log("CONVERSATION ADDED", error);
+        toast.error(error.response.data.error.message || error.message, toastOptions);
+      }
+    }
+
+    if (client) {
+      client.on('conversationAdded', handleNewConv);
+      // twiClient.on('messageAdded', async () => {
+      //   const allParts = await getAllParticipants(allConv, true);
+      //   console.log("ON ADDED", { allParts });
+      //   setChats(allParts)
+      // });
+    }
+
+    return () => {
+      // Clean up the event handler when the component unmounts
+      if (client) {
+        client.off('conversationAdded', handleNewConv);
+      }
+    };
   }, [client, convSID]);
 
   useEffect(() => {
@@ -166,7 +200,7 @@ const Chat = () => {
 
         console.log({ data })
         if (data.access_token) {
-          const twiClient = new Client(data.access_token);
+          let twiClient = new Client(data.access_token);
           twiClient.on('initialized', () => {
             console.log("Client Initialized");
             setClient(twiClient);
@@ -186,14 +220,10 @@ const Chat = () => {
               toast.error(error.message, toastOptions);
             }
           });
+
+
           const allConv = await twiClient.getSubscribedConversations();
           const participants = await getAllParticipants(allConv);
-
-          twiClient.on('messageAdded', async () => {
-            const allParts = await getAllParticipants(allConv, true);
-            console.log("ON ADDED", { allParts });
-            setChats(allParts)
-          });
           console.log("PARTICIPANT", participants);
           setChats(participants);
           setLoading(false);
@@ -213,16 +243,12 @@ const Chat = () => {
     }
 
     try {
-      // create conversation
       const { data } = await axiosInstance.post(
         '/api/admin/chat/create/?isAdmin=true',
         { userId: user._id },
         { headers: { Authorization: token } }
       );
-
-      setChats(prev => [data.chat, ...prev]);
-      setUser(data.chat.user);
-      // setChatId(data.chat._id);
+      console.log("CREATE CHAT", { data });
     } catch (error) {
       toast.error(error.response.data.error.message, toastOptions);
     }

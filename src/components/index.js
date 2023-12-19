@@ -1,4 +1,3 @@
-import Cropper from "./cropper/cropper";
 import {
   useTitle,
   CustomPagination,
@@ -39,7 +38,6 @@ export {
   LoadingBox,
   SideNavBar,
   MotionDiv,
-  Cropper,
   ArrayView,
   AutocompleteSearch,
   ViewCard,

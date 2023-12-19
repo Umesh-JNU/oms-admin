@@ -64,7 +64,7 @@ export default function SideNavbar({ isExpanded }) {
           }
         >
           <div className="brand-link">
-            <img src="/logo/logo192.png" alt="" width={"50px"} height="auto" />
+            <img src="/logo/logo.jpg" alt="" width={"50px"} height="auto" />
             <span className="brand-text ms-2 font-weight-light">
               OMS
             </span>

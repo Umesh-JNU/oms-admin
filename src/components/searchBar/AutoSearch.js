@@ -22,7 +22,7 @@ const AutocompleteSearch = ({ onSelect, searchType }) => {
         try {
           switch (searchType) {
             case "user":
-              var { data } = await axiosInstance(`/api/admin/user/all/?keyword=${searchTerm}`, {
+              var { data } = await axiosInstance(`/api/admin/user/chat/?keyword=${searchTerm}`, {
                 headers: { Authorization: token }
               });
               console.log("user", {data});
@@ -99,8 +99,8 @@ const AutocompleteSearch = ({ onSelect, searchType }) => {
                   <div className='w-100'>
                     <span style={{ fontWeight: "700" }}>{firstname} {lastname}</span>
                     <hr style={{ margin: "0px", color: "#36454F" }} />
-                    <span style={{ fontSize: "0.9rem" }}><b>Email: </b>{email}</span>
-                    <hr style={{ margin: "0px", color: "#36454F" }} />
+                    {/* <span style={{ fontSize: "0.9rem" }}><b>Email: </b>{email}</span> */}
+                    {/* <hr style={{ margin: "0px", color: "#36454F" }} /> */}
                     <span style={{ fontSize: "0.9rem" }}><b>Mobile: </b>{mobile_no}</span>
                     <hr style={{ margin: "0px", color: "#36454F" }} />
                   </div>
