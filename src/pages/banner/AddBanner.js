@@ -73,7 +73,7 @@ export default function AddBanner() {
       reducerProps={{ loading, error, success, dispatch }}
     >
 
-      <UploadFileComp label="Upload Image" accept="image/*" required={true} file={bannerImage} setFile={setBannerImage} fileType="image" isDimension={"true"}/>
+      <UploadFileComp label="Upload Image (Only 1512 x 504)" accept="image/*" required={true} file={bannerImage} setFile={setBannerImage} fileType="image" isDimension={"true"}/>
 
       <ToastContainer />
     </AddForm>
