@@ -9,7 +9,7 @@ import { MdCategory, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { BiMessageDetail } from "react-icons/bi";
 
 const linkList = [
-  { icon: <RiDashboard2Fill className="icon-md" />, text: "Dashboard", url: "/admin/dashboard" },
+  // { icon: <RiDashboard2Fill className="icon-md" />, text: "Dashboard", url: "/admin/dashboard" },
   { icon: <MdCategory className="icon-md" />, text: "Category", url: "/admin/category" },
   { icon: <MdOutlineProductionQuantityLimits className="icon-md" />, text: "Products", url: "/admin/products" },
   { icon: <FaShoppingBasket className="icon-md" />, text: "Orders", url: "/admin/orders" },
@@ -20,7 +20,7 @@ const linkList = [
 ];
 
 const active_text = {
-  "Dashboard": "dashboard",
+  // "Dashboard": "dashboard",
   "Category": "category",
   "Products": "product",
   "Orders": "order",

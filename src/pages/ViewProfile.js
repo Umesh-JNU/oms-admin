@@ -67,13 +67,6 @@ const ViewProfile = () => {
       image_url={user ? user.profile_img : ""}
       reducerProps={{ error, loading, dispatch }}
     >
-      <Details
-        title="Address Details"
-        loading={loading}
-        data={user}
-        detailKey="addr"
-        fields={{ "Address": "address", "City": "city", "Postcode": "postcode" }}
-      />
       <EditProfileModel
         show={modalShow}
         onHide={() => setModalShow(false)}

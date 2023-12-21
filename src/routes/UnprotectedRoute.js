@@ -6,7 +6,7 @@ export default function UnprotectedRoute({ children }) {
   const { state } = useContext(Store);
   const { userInfo } = state;
   return userInfo && userInfo.role === "admin" ? (
-    <Navigate to="/admin/dashboard" />
+    <Navigate to="/admin/category" />
   ) : (
     children
   );

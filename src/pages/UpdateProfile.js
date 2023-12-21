@@ -19,13 +19,10 @@ export default function EditUserModel(props) {
 
   const userData = {
     email: "",
-    profile_img: "",
     firstname: "",
     lastname: "",
     mobile_no: "",
-    addr: "",
-    city: "",
-    postcode: ""
+    password: ""
   };
   const userAttr = [
     {
@@ -33,6 +30,7 @@ export default function EditUserModel(props) {
       props: {
         label: "Firstname",
         name: "firstname",
+        required: true,
       }
     },
     {
@@ -40,6 +38,7 @@ export default function EditUserModel(props) {
       props: {
         label: "Lastname",
         name: "lastname",
+        required: true,
       }
     },
     {
@@ -55,80 +54,18 @@ export default function EditUserModel(props) {
       props: {
         label: "Mobile No.",
         name: "mobile_no",
-      }
-    },
-    {
-      type: "text",
-      props: {
-        label: "Address",
-        name: "addr",
         required: true,
       }
     },
     {
       type: "text",
       props: {
-        label: "City",
-        name: "city",
-        required: true,
-      }
-    },
-    {
-      type: "text",
-      props: {
-        label: "Postcode",
-        name: "postcode",
-        required: true,
+        label: "Password",
+        name: "password",
       }
     }
   ]
   const [info, setInfo] = useState(userData);
-  const [preview, setPreview] = useState("");
-
-  const [uploadPercentage, setUploadPercentage] = useState(0);
-  const [isUploaded, setIsUploaded] = useState(false);
-  const uploadPercentageHandler = (per) => { setUploadPercentage(per); };
-
-  const uploadFileHandler = async (e, type) => {
-    if (!e.target.files[0]) {
-      // if (!file) {
-      setInfo({ ...info, profile_img: null });
-      setPreview("");
-      return;
-    }
-    if (e.target.files[0].size > 5000000) {
-      toast.warning("Image size is too large. (max size 5MB)", {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-      setInfo({ ...info, profile_img: null });
-      setPreview("");
-      return;
-    }
-    try {
-      // if (e.target.files[0]) {
-      const location = await uploadFile(
-        e.target.files[0],
-        // file,
-        token,
-        uploadPercentageHandler
-      );
-      if (location.error) {
-        throw location.error;
-      }
-
-      setInfo({ ...info, profile_img: location });
-      setPreview(location);
-
-      setTimeout(() => {
-        setUploadPercentage(0);
-        setIsUploaded(true);
-      }, 1000);
-    } catch (error) {
-      toast.error(error, {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-    }
-  };
 
   useEffect(() => {
     if (user) {
@@ -139,12 +76,7 @@ export default function EditUserModel(props) {
         firstname: user.firstname,
         lastname: user.lastname,
         mobile_no: user.mobile_no,
-        addr: user.addr.address,
-        city: user.addr.city,
-        postcode: user.addr.postcode,
-        profile_img: user.profile_img
       });
-      setPreview(user.profile_img)
     }
 
     (async () => {
@@ -161,16 +93,10 @@ export default function EditUserModel(props) {
       lastname: info.lastname,
       email: info.email,
       mobile_no: info.mobile_no,
-      profile_img: info.profile_img,
-      addr: {
-        address: info.addr,
-        city: info.city,
-        postcode: info.postcode
-      }
+      password: info.password
     });
     if (success) {
       resetForm();
-      setPreview("");
     }
   };
 
@@ -183,19 +109,8 @@ export default function EditUserModel(props) {
       inputFieldProps={userAttr}
       submitHandler={submitHandler}
       target=""
-      successMessage="User Updated Successfully! Redirecting..."
+      successMessage="Profile Updated Successfully! Redirecting..."
       reducerProps={{ loadingUpdate, error, success, dispatch }}
-    >
-      <TextInput label="Upload Image" type="file" accept="image/*" onChange={(e) => uploadFileHandler(e)} />
-      {uploadPercentage > 0 && (
-        <ProgressBar
-          now={uploadPercentage}
-          active
-          label={`${uploadPercentage}%`}
-        />
-      )}
-
-      {preview && <img src={preview} width={100} className="img-fluid" />}
-    </EditForm>
+    />
   );
 }

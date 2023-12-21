@@ -26,7 +26,7 @@ function App() {
 
   const routeList = [
     { path: "/admin/view-profile", element: <Profile /> },
-    { path: "/admin/dashboard", element: <Dashboard /> },
+    // { path: "/admin/dashboard", element: <Dashboard /> },
     { path: "/admin/wholesalers", element: <Users /> },
     { path: "/admin/wholesaler/create", element: <AddUser /> },
     { path: "/admin/view/wholesaler/:id", element: <ViewUser /> },

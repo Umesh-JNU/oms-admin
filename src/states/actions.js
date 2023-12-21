@@ -4,7 +4,7 @@ import { getError } from "../utils/error";
 export const login = async (ctxDispatch, dispatch, credentials) => {
   try {
     dispatch({ type: "FETCH_REQUEST" });
-    const { data } = await axiosInstance.post("/api/user/login", credentials);
+    const { data } = await axiosInstance.post("/api/admin/login", credentials);
 
     console.log("data", data);
     if (data.token) {
@@ -36,7 +36,7 @@ export const clearSuccess = async (dispatch) => {
 export const getProfile = async (dispatch, token) => {
   try {
     dispatch({ type: "FETCH_REQUEST" });
-    const { data } = await axiosInstance.get("/api/user/profile",
+    const { data } = await axiosInstance.get("/api/user/user-profile",
       { headers: { Authorization: token } }
     );
 
@@ -56,7 +56,7 @@ export const updateProfile = async (ctxDispatch, dispatch, token, userInfo) => {
   try {
     dispatch({ type: "UPDATE_REQUEST" });
 
-    const { data } = await axiosInstance.put(`/api/user/update-profile`, userInfo, {
+    const { data } = await axiosInstance.put(`/api/admin/update-profile`, userInfo, {
       headers: { Authorization: token },
     });
     console.log("update profile", { data })
